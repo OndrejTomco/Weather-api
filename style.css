@@ -1,0 +1,28 @@
+.inputForm{
+    border: solid 1px grey;
+    -webkit-box-shadow: -4px 10px 30px -6px rgba(0,0,0,0.75);;
+}
+
+#city, #country{
+    border:none;
+    outline: none;
+    border-bottom: 1px solid rgb(48, 27, 95);
+    margin: 10px;
+    text-align: center;
+}
+
+#inputHeader{
+    font-size: 20px;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid;
+    border-bottom-color: rgb(38, 10, 102);
+    background-color:rgb(38, 10, 102);
+    color: white;
+}
+
+#submitBtn{
+    background-color: rgb(38, 10, 102);
+    color:white;
+}
