@@ -8,6 +8,11 @@ $("#submitBtn").click(function(){
         var urlLink = 'http://api.openweathermap.org/data/2.5/weather?q=';
         urlLink = urlLink + city;
 
+        if(country.length == 2){
+            urlLink = urlLink + ',' + country;
+            
+        }
+
         urlLink = urlLink + '&APPID=a84fd6bdde590e3024412e55a99152c0';
         console.log(urlLink);
 
@@ -22,20 +27,17 @@ $("#submitBtn").click(function(){
             type: 'GET'
 
         });
-    }
 
-    // if(country.length == 2){
-    //     urlLink = urlLink + ',' + country;
-        
-    // }
+    }
 
     
 });
 
 function createTable(data){
    
-
+    $("#error").html('');
     $("#weatherContainer").empty();
+    $("#weatherContainer").hide();
 
     var table = $('<table/>');
     table.addClass('table table-bordered table-striped');
@@ -43,17 +45,18 @@ function createTable(data){
     table.append("<tr class='col-md-12 headRow text-center'><th colspan ='2'>Current weather in "+data.name+"</th></tr>");
     
 
-    table.append(getTableRow('Temperature: ',parseFloat(data.main.temp-273.15).toFixed(1) + '°','Humidity: ',data.main.humidity+'%' ));
-    table.append(getTableRow('Description: ', data.weather[0].description,'Pressure: ',data.main.pressure + ' hPa' ));
+    table.append(getTableRow('<img src="thermometer.png"> Temperature: ',parseFloat(data.main.temp-273.15).toFixed(1) + '°','<img src="humidity.png"> Humidity: ',data.main.humidity+'%' ));
+    table.append(getTableRow('<img src="clouds.png"> Description: ', data.weather[0].description,'<img src="pressure.png"> Pressure: ',data.main.pressure + ' hPa' ));
 
     if($('#showDetails').is(":checked")){
 
-        table.append(getTableRow('Sunrise: ', convertTime(data.sys.sunrise),'Sunset: ',convertTime(data.sys.sunset) ));
-        table.append(getTableRow('Wind speed: ', data.wind.speed + 'm/s','Visibility: ',data.visibility ));
-        table.append(getTableRow('Min temperature: ', parseFloat(data.main.temp_min-273.15).toFixed(1)+ '°','Max temperature: ',parseFloat(data.main.temp_max-273.15).toFixed(1)+ '°' ));
+        table.append(getTableRow('<img src="sunrise.png"> Sunrise: ', convertTime(data.sys.sunrise),'<img src="sunset.png"> Sunset: ',convertTime(data.sys.sunset) ));
+        table.append(getTableRow('<img src="wind.png"> Wind speed: ', data.wind.speed + 'm/s','Visibility: ',data.visibility ));
+        table.append(getTableRow('<img src="thermometer.png"> Min temperature: ', parseFloat(data.main.temp_min-273.15).toFixed(1)+ '°','<img src="thermometer.png"> Max temperature: ',parseFloat(data.main.temp_max-273.15).toFixed(1)+ '°' ));
 
     }
-
+        $("#weatherContainer").fadeIn('normal');
+    
 }
 
 function getTableRow(name1,data1,name2,data2){
@@ -68,10 +71,10 @@ function getTableRow(name1,data1,name2,data2){
     
 }
 
-function convertTime(data){
-    var utcSeconds = data;
-    var d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
+function convertTime(time){
+    // var utcSeconds = data;
+    var d = new Date(time*1000);
+    // d.setUTCSeconds(data);
     var h =  d.getHours();
     var min =  d.getMinutes();
     var sec =  d.getSeconds();
