@@ -38,17 +38,17 @@ function createTable(data){
     var table = $('<table/>');
     table.addClass('table table-bordered');
     $("#weatherContainer").append(table);
-    table.append("<tr class='col-md-12'><th>Current weather in "+data.name+"</th></tr>");
+    table.append("<tr class='col-md-12 headRow text-center'><th colspan ='2'>Current weather in "+data.name+"</th></tr>");
     
 
-    table.append(getTableRow('Temperature: ', Math.round(data.main.temp-273.15),'Humidity: ',data.main.humidity+'%' ));
+    table.append(getTableRow('Temperature: ', Math.round(data.main.temp-273.15) + '°','Humidity: ',data.main.humidity+'%' ));
     table.append(getTableRow('Description: ', data.weather[0].description,'Pressure: ',data.main.pressure + ' hPa' ));
 
     if($('#showDetails').is(":checked")){
 
-        table.append(getTableRow('Sunrise: ', data.sys.sunrise,'Sunset: ',data.sys.sunset ));
+        table.append(getTableRow('Sunrise: ', convertTime(data.sys.sunrise),'Sunset: ',convertTime(data.sys.sunset) ));
         table.append(getTableRow('Wind speed: ', data.wind.speed + 'm/s','Visibility: ',data.visibility ));
-        table.append(getTableRow('Min temperature: ', Math.round(data.main.temp_min-273.15),'Max temperature: ',Math.round(data.main.temp_max-273.15) ));
+        table.append(getTableRow('Min temperature: ', Math.round(data.main.temp_min-273.15)+ '°','Max temperature: ',Math.round(data.main.temp_max-273.15)+ '°' ));
 
     }
 
@@ -63,6 +63,27 @@ function getTableRow(name1,data1,name2,data2){
     row.append(column2);
     column2.html(name2 + data2);
     return row;
+}
+
+function convertTime(data){
+    var utcSeconds = data;
+    var d = new Date(0);
+    d.setUTCSeconds(utcSeconds);
+    var h =  d.getHours();
+    var min =  d.getMinutes();
+    var sec =  d.getSeconds();
+
+    if(h<10){
+        h = '0' + h;
+    }
+    if(min<10) {
+        min = '0' + min;
+    }
+    if(sec<10) {
+        sec = '0' + sec;
+    }
+
+    return h+':'+ min+':'+ sec;
 }
 
 });

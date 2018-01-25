@@ -26,3 +26,9 @@
     background-color: rgb(38, 10, 102);
     color:white;
 }
+
+.headRow{
+    background-color:rgb(48, 27, 95);
+    color:white;
+    font-weight: normal;
+}
