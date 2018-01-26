@@ -38,6 +38,8 @@ function createTable(data){
     $("#error").html('');
     $("#weatherContainer").empty();
     $("#weatherContainer").hide();
+    var mapsUrl = "<a href =\"http://www.google.com/maps/search/?api=1&query="+data.coord.lat+','+ data.coord.lon+"\" target=\"_blank\">Google maps</a>";
+    console.log(mapsUrl);
 
     var table = $('<table/>');
     table.addClass('table table-bordered table-striped');
@@ -51,10 +53,11 @@ function createTable(data){
     if($('#showDetails').is(":checked")){
 
         table.append(getTableRow('<img src="sunrise.png"> Sunrise: ', convertTime(data.sys.sunrise),'<img src="sunset.png"> Sunset: ',convertTime(data.sys.sunset) ));
-        table.append(getTableRow('<img src="wind.png"> Wind speed: ', data.wind.speed + 'm/s','Visibility: ',data.visibility ));
+        table.append(getTableRow('<img src="wind.png"> Wind speed: ', data.wind.speed + 'm/s','<img src="binoculars.png"> Visibility: ',data.visibility/1000 + 'km' ));
         table.append(getTableRow('<img src="thermometer.png"> Min temperature: ', parseFloat(data.main.temp_min-273.15).toFixed(1)+ '°','<img src="thermometer.png"> Max temperature: ',parseFloat(data.main.temp_max-273.15).toFixed(1)+ '°' ));
-
+        table.append(getTableRow(mapsUrl,'','','')); 
     }
+          
         $("#weatherContainer").fadeIn('normal');
     
 }
